@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad647289-abe0-4c4a-8552-d6a3153b8294" name="Changes" comment="" />
+    <list default="true" id="79c67477-2a7b-4ab5-97a5-0ab89acb1ff7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,25 +13,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="2SDWnspgLzHsyPGQzeIT6jzMHWt" />
+  <component name="ProjectId" id="2SDWtmSudM1l0A3lgAvJ1kprY2s" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/home/riandziuba/repositories/java-course-nelio-neves/section-7"
+    "last_opened_file_path": "/home/riandziuba/repositories/api-cookingplus"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ad647289-abe0-4c4a-8552-d6a3153b8294" name="Changes" comment="" />
-      <created>1688681801879</created>
+      <changelist id="79c67477-2a7b-4ab5-97a5-0ab89acb1ff7" name="Changes" comment="" />
+      <created>1688681850583</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1688681801879</updated>
+      <updated>1688681850583</updated>
     </task>
     <servers />
   </component>
