@@ -1,4 +1,4 @@
-package model.entities.boardgame;
+package org.example.model.entities.boardgame;
 
 public class Position {
     private int row;
