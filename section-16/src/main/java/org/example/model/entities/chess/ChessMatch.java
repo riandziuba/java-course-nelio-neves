@@ -76,4 +76,10 @@ public class ChessMatch {
         }
     }
 
+    public boolean[][] possibleMoves(ChessPosition sourcePosition) {
+         Position position = sourcePosition.toPosition();
+         this.validateSourcePosition(position);
+         return this.board.piece(position).possibleMoves();
+    }
+
 }
