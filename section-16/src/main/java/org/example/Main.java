@@ -6,7 +6,9 @@ import org.example.model.entities.chess.ChessMatch;
 import org.example.model.entities.chess.ChessPiece;
 import org.example.model.entities.chess.ChessPosition;
 import org.example.model.exceptions.BoardException;
+import org.example.model.exceptions.ChessException;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -16,16 +18,22 @@ public class Main {
             ChessMatch chessMatch = new ChessMatch();
 
             while (true) {
-                UI.printBoard(chessMatch.getPieces());
-                System.out.println();
-                System.out.print("Source: ");
-                ChessPosition source = UI.readChessPosition(scanner);
+                try {
+                    UI.clearScreen();
+                    UI.printBoard(chessMatch.getPieces());
+                    System.out.println();
+                    System.out.print("Source: ");
+                    ChessPosition source = UI.readChessPosition(scanner);
 
-                System.out.println();
-                System.out.print("Target: ");
-                ChessPosition target = UI.readChessPosition(scanner);
+                    System.out.println();
+                    System.out.print("Target: ");
+                    ChessPosition target = UI.readChessPosition(scanner);
 
-                ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+                    ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+                } catch (ChessException | InputMismatchException e) {
+                    System.out.println(e.getMessage());
+                    scanner.nextLine();
+                }
             }
 
 //        } catch (BoardException e) {
