@@ -1,9 +1,11 @@
 package org.example.model.entities.chess;
 
 import org.example.model.entities.boardgame.Board;
+import org.example.model.entities.boardgame.Piece;
 import org.example.model.entities.boardgame.Position;
 import org.example.model.entities.chess.pieces.King;
 import org.example.model.entities.chess.pieces.Rook;
+import org.example.model.exceptions.ChessException;
 
 public class ChessMatch {
     Board board;
@@ -28,9 +30,40 @@ public class ChessMatch {
     }
 
     private void initialSetup() {
-        this.placeNewPiece('a' , 8, new Rook(board, Color.WHITE));
-        this.placeNewPiece('e', 8, new King(board, Color.WHITE));
-        this.placeNewPiece('e', 1, new King(board, Color.WHITE));
+        this.placeNewPiece('c', 1, new Rook(board, Color.WHITE));
+        this.placeNewPiece('c', 2, new Rook(board, Color.WHITE));
+        this.placeNewPiece('d', 2, new Rook(board, Color.WHITE));
+        this.placeNewPiece('e', 2, new Rook(board, Color.WHITE));
+        this.placeNewPiece('e', 1, new Rook(board, Color.WHITE));
+        this.placeNewPiece('d', 1, new King(board, Color.WHITE));
+
+        this.placeNewPiece('c', 7, new Rook(board, Color.BLACK));
+        this.placeNewPiece('c', 8, new Rook(board, Color.BLACK));
+        this.placeNewPiece('d', 7, new Rook(board, Color.BLACK));
+        this.placeNewPiece('e', 7, new Rook(board, Color.BLACK));
+        this.placeNewPiece('e', 8, new Rook(board, Color.BLACK));
+        this.placeNewPiece('d', 8, new King(board, Color.BLACK));
+    }
+
+    public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
+        Position source = sourcePosition.toPosition();
+        Position target = targetPosition.toPosition();
+        this.validateSourcePosition(source);
+        Piece capturedPiece = this.makeMove(source, target);
+        return (ChessPiece) capturedPiece;
+    }
+
+    private Piece makeMove(Position source, Position target) {
+        Piece piece = board.removePiece(source);
+        Piece capturedPiece = board.removePiece(target);
+        board.placePiece(piece, target);
+        return capturedPiece;
+    }
+
+    public void validateSourcePosition(Position position) {
+        if(!board.thereIsAPiece(position)) {
+            throw new ChessException("There is no piece on source position");
+        }
     }
 
 }
