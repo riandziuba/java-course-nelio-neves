@@ -9,10 +9,20 @@ import org.example.model.exceptions.ChessException;
 
 public class ChessMatch {
     Board board;
+    int turn;
+    Color currentPlayer;
+
 
     public ChessMatch() {
         this.board = new Board(8,8);
+        this.turn = 1;
+        this.currentPlayer = Color.WHITE;
         this.initialSetup();
+    }
+
+    private void nextTurn() {
+        turn++;
+        this.currentPlayer = (this.currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
     }
 
     public ChessPiece[][] getPieces() {
@@ -51,6 +61,7 @@ public class ChessMatch {
         this.validateSourcePosition(source);
         this.validateTargetPosition(source, target);
         Piece capturedPiece = this.makeMove(source, target);
+        this.nextTurn();
         return (ChessPiece) capturedPiece;
     }
 
@@ -68,10 +79,13 @@ public class ChessMatch {
     }
 
     public void validateSourcePosition(Position position) {
-        if(!board.thereIsAPiece(position)) {
+        if (!board.thereIsAPiece(position)) {
             throw new ChessException("There is no piece on source position");
         }
-        if(!board.piece(position).isThereAnyPossibleMove()) {
+        if (this.currentPlayer != ((ChessPiece) board.piece(position)).getColor()) {
+           throw new ChessException("The chosen piece it's not yours");
+        }
+        if (!board.piece(position).isThereAnyPossibleMove()) {
             throw new ChessException("There is no possible move for the chosen piece");
         }
     }
@@ -80,6 +94,22 @@ public class ChessMatch {
          Position position = sourcePosition.toPosition();
          this.validateSourcePosition(position);
          return this.board.piece(position).possibleMoves();
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public Color getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Color currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
 }
