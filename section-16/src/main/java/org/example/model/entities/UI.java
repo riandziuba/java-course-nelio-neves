@@ -1,10 +1,14 @@
 package org.example.model.entities;
 
+import org.example.model.entities.boardgame.Piece;
 import org.example.model.entities.chess.ChessMatch;
 import org.example.model.entities.chess.ChessPiece;
 import org.example.model.entities.chess.ChessPosition;
 import org.example.model.entities.chess.Color;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class UI {
@@ -61,8 +65,10 @@ public class UI {
         System.out.println("  a b c d e f g h");
     }
 
-    public static void printMatch(ChessMatch chessMatch) {
+    public static void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
         printBoard(chessMatch.getPieces());
+        System.out.println();
+        printCapturedPieces(captured);
         System.out.println();
         System.out.println("Turn: " + chessMatch.getTurn());
         System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
@@ -84,5 +90,25 @@ public class UI {
             }
         }
         System.out.print(" ");
+    }
+
+    public static void printCapturedPieces(List<ChessPiece> captured) {
+        List<ChessPiece> white = new ArrayList<>();
+        List<ChessPiece> black = new ArrayList<>();
+
+        white = captured.stream().filter(x -> x.getColor() == Color.WHITE).toList();
+        black = captured.stream().filter(x -> x.getColor() == Color.BLACK).toList();
+
+        System.out.println("Captured Pieces: ");
+        System.out.println("White:");
+        System.out.print(ANSI_WHITE);
+        System.out.println(Arrays.toString(white.toArray()));
+        System.out.print(ANSI_RESET);
+
+        System.out.println("Black:");
+        System.out.print(ANSI_YELLOW);
+        System.out.println(Arrays.toString(black.toArray()));
+        System.out.print(ANSI_RESET);
+
     }
 }

@@ -7,10 +7,15 @@ import org.example.model.entities.chess.pieces.King;
 import org.example.model.entities.chess.pieces.Rook;
 import org.example.model.exceptions.ChessException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChessMatch {
-    Board board;
-    int turn;
-    Color currentPlayer;
+    private Board board;
+    private int turn;
+    private Color currentPlayer;
+    private List<Piece> piecesOnTheBoard = new ArrayList<>();
+    private List<Piece> capturedPieces = new ArrayList<>();
 
 
     public ChessMatch() {
@@ -37,6 +42,7 @@ public class ChessMatch {
 
     private void placeNewPiece(char column, int row, ChessPiece chessPiece) {
         board.placePiece(chessPiece, new ChessPosition(row, column).toPosition());
+        piecesOnTheBoard.add(chessPiece);
     }
 
     private void initialSetup() {
@@ -75,6 +81,10 @@ public class ChessMatch {
         Piece piece = board.removePiece(source);
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(piece, target);
+        if (capturedPiece != null) {
+            capturedPieces.add(capturedPiece);
+            piecesOnTheBoard.remove(capturedPiece);
+        }
         return capturedPiece;
     }
 
