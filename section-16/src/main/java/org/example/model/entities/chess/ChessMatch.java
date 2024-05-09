@@ -80,6 +80,7 @@ public class ChessMatch {
     }
 
     public boolean testCheckMate(Color color) {
+
         if (!testCheck(color)) {
             return false;
         }
