@@ -4,6 +4,7 @@ import org.example.model.entities.boardgame.Board;
 import org.example.model.entities.boardgame.Piece;
 import org.example.model.entities.boardgame.Position;
 import org.example.model.entities.chess.pieces.King;
+import org.example.model.entities.chess.pieces.Pawn;
 import org.example.model.entities.chess.pieces.Rook;
 import org.example.model.exceptions.ChessException;
 
@@ -112,12 +113,29 @@ public class ChessMatch {
     }
 
     private void initialSetup() {
-        this.placeNewPiece('h', 7, new Rook(board, Color.WHITE));
-        this.placeNewPiece('d', 1, new Rook(board, Color.WHITE));
-        this.placeNewPiece('e', 1, new King(board, Color.WHITE));
+        placeNewPiece('a', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('e', 1, new King(board, Color.WHITE));
+        placeNewPiece('h', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('a', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('b', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('c', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('d', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('e', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('f', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('g', 2, new Pawn(board, Color.WHITE));
+        placeNewPiece('h', 2, new Pawn(board, Color.WHITE));
 
-        this.placeNewPiece('b', 8, new Rook(board, Color.BLACK));
-        this.placeNewPiece('a', 8, new King(board, Color.BLACK));
+        placeNewPiece('a', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('e', 8, new King(board, Color.BLACK));
+        placeNewPiece('h', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('a', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('b', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('c', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('d', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('e', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('f', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('g', 7, new Pawn(board, Color.BLACK));
+        placeNewPiece('h', 7, new Pawn(board, Color.BLACK));
     }
 
     public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
@@ -148,7 +166,8 @@ public class ChessMatch {
     }
 
     private Piece makeMove(Position source, Position target) {
-        Piece piece = board.removePiece(source);
+        ChessPiece piece = (ChessPiece) board.removePiece(source);
+        piece.increaseMoveCount();
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(piece, target);
         if (capturedPiece != null) {
@@ -159,7 +178,8 @@ public class ChessMatch {
     }
 
     private void undoMove(Position source, Position target, Piece capturedPiece) {
-        Piece piece = board.removePiece(target);
+        ChessPiece piece = (ChessPiece) board.removePiece(target);
+        piece.decreaseMoveCount();
         board.placePiece(piece, source);
 
         if (capturedPiece != null) {

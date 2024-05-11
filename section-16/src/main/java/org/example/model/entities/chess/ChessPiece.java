@@ -7,7 +7,9 @@ import org.example.model.entities.boardgame.Position;
 public abstract class ChessPiece extends Piece {
 
     private Color color;
-     public ChessPiece(Board board, Color color) {
+    private int moveCount;
+
+    public ChessPiece(Board board, Color color) {
         super(board);
         this.color = color;
     }
@@ -15,6 +17,19 @@ public abstract class ChessPiece extends Piece {
     public Color getColor() {
         return color;
     }
+
+    protected void increaseMoveCount() {
+        this.moveCount++;
+    }
+
+    protected void decreaseMoveCount() {
+        this.moveCount--;
+    }
+
+    public int getMoveCount() {
+        return moveCount;
+    }
+
 
     public ChessPosition getChessPosition() {
         return ChessPosition.fromPosition(position);
