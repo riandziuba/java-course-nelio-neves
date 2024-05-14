@@ -6,6 +6,7 @@ import org.example.model.entities.boardgame.Position;
 import org.example.model.entities.chess.pieces.*;
 import org.example.model.exceptions.ChessException;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class ChessMatch {
     private boolean check;
     private boolean checkMate;
     private ChessPiece enPassantVulnerable;
+    private ChessPiece promotedPiece;
 
     public ChessMatch() {
         this.board = new Board(8,8);
@@ -161,6 +163,15 @@ public class ChessMatch {
 
         ChessPiece movedPiece = (ChessPiece) this.board.piece(target);
 
+        promotedPiece = null;
+
+        if (movedPiece instanceof Pawn) {
+            if ((movedPiece.getColor() == Color.WHITE && target.getRow() == 0) || (movedPiece.getColor() == Color.BLACK && target.getRow() == 7)) {
+                promotedPiece = (ChessPiece) board.piece(target);
+                promotedPiece = this.replacePromotedPiece("Q");
+            }
+        }
+
         this.check = testCheck(opponent(currentPlayer));
 
         this.checkMate = testCheckMate(opponent(currentPlayer));
@@ -174,6 +185,41 @@ public class ChessMatch {
         }
 
         return (ChessPiece) capturedPiece;
+    }
+
+    public ChessPiece replacePromotedPiece(String type) {
+        if (promotedPiece == null) {
+            throw new IllegalStateException("There is not piece to be promoted");
+        }
+
+        Position position = promotedPiece.getChessPosition().toPosition();
+        Piece piece = board.removePiece(position);
+        piecesOnTheBoard.remove(piece);
+        ChessPiece newPiece;
+        switch (type) {
+            case "Q":
+                newPiece = new Queen(board, promotedPiece.getColor());
+                board.placePiece(newPiece, position);
+                piecesOnTheBoard.add(newPiece);
+                return newPiece;
+            case "B":
+                newPiece = new Bishop(board, promotedPiece.getColor());
+                board.placePiece(newPiece, position);
+                piecesOnTheBoard.add(newPiece);
+                return newPiece;
+            case "K":
+                newPiece = new Knight(board, promotedPiece.getColor());
+                board.placePiece(newPiece, position);
+                piecesOnTheBoard.add(newPiece);
+                return newPiece;
+            case "R":
+                newPiece = new Rook(board, promotedPiece.getColor());
+                board.placePiece(newPiece, position);
+                piecesOnTheBoard.add(newPiece);
+                return newPiece;
+            default:
+                throw new InvalidParameterException("Invalid type for promotion");
+        }
     }
 
     public void validateTargetPosition(Position source, Position target) {
@@ -304,5 +350,9 @@ public class ChessMatch {
 
     public ChessPiece getEnPassantVulnerable() {
         return enPassantVulnerable;
+    }
+
+    public ChessPiece getPromotedPiece() {
+        return promotedPiece;
     }
 }
