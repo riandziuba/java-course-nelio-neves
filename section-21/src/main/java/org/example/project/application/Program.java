@@ -17,8 +17,22 @@ public class Program {
 
         Seller seller2 = DaoFactory.CreateSellerDao().findById(1);
         System.out.println(seller2);
+
+        System.out.println("Finding seller by department");
         Department department2 = new Department(2, "Electronics");
         List<Seller> sellers = DaoFactory.CreateSellerDao().findByDepartment(department2);
         System.out.println(sellers);
+
+        System.out.println("Finding all sellers");
+        sellers = DaoFactory.CreateSellerDao().findAll();
+        System.out.println(sellers);
+
+        System.out.println("Inserting seller");
+        Seller seller3 = new Seller(null, "John", "john@example.com", new Date(), 1000.0, department2);
+        Seller insertedSeller = DaoFactory.CreateSellerDao().insert(seller3);
+        System.out.println(insertedSeller);
+
+
+
     }
 }

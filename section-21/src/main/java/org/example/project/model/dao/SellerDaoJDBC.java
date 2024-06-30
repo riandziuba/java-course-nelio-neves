@@ -5,6 +5,7 @@ import org.example.db.JDBCActions;
 import org.example.project.model.entities.Department;
 import org.example.project.model.entities.Seller;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,12 +18,20 @@ public class SellerDaoJDBC implements SellerDao {
     private JDBCActions<Seller> actions = new JDBCActions<>();
 
     @Override
-    public void insert(Seller department) {
-
+    public Seller insert(Seller seller) {
+        String sql = """
+                INSERT INTO
+                	seller (name, email, birthDate, baseSalary, departmentId)
+                VALUES
+                	(?, ?, ?, ?, ?)
+                """;
+        List<Integer> ids = actions.insertAndGetIds(sql, List.of(seller.getName(), seller.getEmail(), new Date(seller.getBirthDate().getTime()), seller.getBaseSalary(), seller.getDepartment().getId()));
+        seller.setId(ids.getFirst());
+        return seller;
     }
 
     @Override
-    public void update(Seller department) {
+    public void update(Seller seller) {
 
     }
 

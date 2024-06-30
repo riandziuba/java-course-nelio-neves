@@ -71,14 +71,19 @@ public class JDBCActions<T> {
     }
 
     public List<Integer> insertAndGetIds(String sql, List<Object> params) {
+        List<Integer> ids = new ArrayList<>();
         try (Connection connection = DB.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             this.setParameters(statement, params);
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            List<Integer> ids = new ArrayList<>();
-            while (resultSet.next()) {
-                ids.add(resultSet.getInt(1));
+            int rows = statement.executeUpdate();
+            if (rows > 0) {
+                ResultSet resultSet = statement.getGeneratedKeys();
+                while (resultSet.next()) {
+                    ids.add(resultSet.getInt(1));
+                }
+                resultSet.close();
+            } else {
+                throw new DbException("No rows were inserted");
             }
             return ids;
         } catch (SQLException e) {
