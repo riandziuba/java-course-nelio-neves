@@ -49,7 +49,13 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void deleteById(Integer id) {
-
+        String sql = """
+                DELETE FROM
+                    seller
+                WHERE
+                    id = ?
+                """;
+        actions.execute(sql, List.of(id));
     }
 
     @Override

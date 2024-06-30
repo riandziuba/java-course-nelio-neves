@@ -38,5 +38,8 @@ public class Program {
         DaoFactory.CreateSellerDao().update(seller4);
         System.out.println(DaoFactory.CreateSellerDao().findById(insertedSeller.getId()));
 
+        System.out.println("Deleting seller");
+        DaoFactory.CreateSellerDao().deleteById(insertedSeller.getId());
+
     }
 }
