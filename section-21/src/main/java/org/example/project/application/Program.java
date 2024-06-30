@@ -32,7 +32,11 @@ public class Program {
         Seller insertedSeller = DaoFactory.CreateSellerDao().insert(seller3);
         System.out.println(insertedSeller);
 
-
+        System.out.println("Updating seller");
+        Seller seller4 = DaoFactory.CreateSellerDao().findById(insertedSeller.getId());
+        seller4.setName("John Doe");
+        DaoFactory.CreateSellerDao().update(seller4);
+        System.out.println(DaoFactory.CreateSellerDao().findById(insertedSeller.getId()));
 
     }
 }
