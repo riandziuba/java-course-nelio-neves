@@ -1,11 +1,11 @@
 package org.example.project.model.dao;
 
 public class DaoFactory {
-    public static DepartmentDao CreateDepartmentDao() {
+    public static DepartmentDao createDepartmentDao() {
         return new DepartmentDaoJDBC();
     }
 
-    public static SellerDao CreateSellerDao() {
+    public static SellerDao createSellerDao() {
         return new SellerDaoJDBC();
     }
 

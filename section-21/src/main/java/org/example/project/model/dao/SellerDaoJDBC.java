@@ -1,6 +1,5 @@
 package org.example.project.model.dao;
 
-import org.example.db.DBActions;
 import org.example.db.JDBCActions;
 import org.example.project.model.entities.Department;
 import org.example.project.model.entities.Seller;

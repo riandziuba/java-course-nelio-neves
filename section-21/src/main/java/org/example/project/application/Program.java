@@ -15,31 +15,31 @@ public class Program {
         Seller seller = new Seller(1, "John", "john@example.com", new Date(), 1000.0, department);
         System.out.println(seller);
 
-        Seller seller2 = DaoFactory.CreateSellerDao().findById(1);
+        Seller seller2 = DaoFactory.createSellerDao().findById(1);
         System.out.println(seller2);
 
         System.out.println("Finding seller by department");
         Department department2 = new Department(2, "Electronics");
-        List<Seller> sellers = DaoFactory.CreateSellerDao().findByDepartment(department2);
+        List<Seller> sellers = DaoFactory.createSellerDao().findByDepartment(department2);
         System.out.println(sellers);
 
         System.out.println("Finding all sellers");
-        sellers = DaoFactory.CreateSellerDao().findAll();
+        sellers = DaoFactory.createSellerDao().findAll();
         System.out.println(sellers);
 
         System.out.println("Inserting seller");
         Seller seller3 = new Seller(null, "John", "john@example.com", new Date(), 1000.0, department2);
-        Seller insertedSeller = DaoFactory.CreateSellerDao().insert(seller3);
+        Seller insertedSeller = DaoFactory.createSellerDao().insert(seller3);
         System.out.println(insertedSeller);
 
         System.out.println("Updating seller");
-        Seller seller4 = DaoFactory.CreateSellerDao().findById(insertedSeller.getId());
+        Seller seller4 = DaoFactory.createSellerDao().findById(insertedSeller.getId());
         seller4.setName("John Doe");
-        DaoFactory.CreateSellerDao().update(seller4);
-        System.out.println(DaoFactory.CreateSellerDao().findById(insertedSeller.getId()));
+        DaoFactory.createSellerDao().update(seller4);
+        System.out.println(DaoFactory.createSellerDao().findById(insertedSeller.getId()));
 
         System.out.println("Deleting seller");
-        DaoFactory.CreateSellerDao().deleteById(insertedSeller.getId());
+        DaoFactory.createSellerDao().deleteById(insertedSeller.getId());
 
     }
 }
