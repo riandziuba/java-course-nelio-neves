@@ -5,6 +5,7 @@ import org.example.project.model.entities.Department;
 import org.example.project.model.entities.Seller;
 
 import java.util.Date;
+import java.util.List;
 
 public class Program {
     public static void main(String[] args) {
@@ -16,5 +17,8 @@ public class Program {
 
         Seller seller2 = DaoFactory.CreateSellerDao().findById(1);
         System.out.println(seller2);
+        Department department2 = new Department(2, "Electronics");
+        List<Seller> sellers = DaoFactory.CreateSellerDao().findByDepartment(department2);
+        System.out.println(sellers);
     }
 }

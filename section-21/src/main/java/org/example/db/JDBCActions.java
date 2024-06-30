@@ -6,22 +6,16 @@ import java.util.List;
 
 public class JDBCActions<T> {
     public List<T> select(String sql, List<Object> params, RowMapper<T> rowMapper) {
-        List<T> rows = new ArrayList<>();
-
         try (Connection connection = DB.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             this.setParameters(statement, params);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                rows.add(rowMapper.mapRow(resultSet));
-            }
+            return rowMapper.mapRows(resultSet);
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return rows;
     }
 
     public static void beginTransaction() {
