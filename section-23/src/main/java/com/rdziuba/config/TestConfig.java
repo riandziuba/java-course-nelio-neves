@@ -1,8 +1,10 @@
 package com.rdziuba.config;
 
+import com.rdziuba.entities.Category;
 import com.rdziuba.entities.Order;
 import com.rdziuba.entities.User;
 import com.rdziuba.entities.enums.OrderStatus;
+import com.rdziuba.repositories.CategoryRepository;
 import com.rdziuba.repositories.OrderRepository;
 import com.rdziuba.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class TestConfig implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 
     @Override
@@ -35,5 +39,11 @@ public class TestConfig implements CommandLineRunner {
         Order orderThree = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), userOne, OrderStatus.WAITING_PAYMENT);
 
         orderRepository.saveAll(Arrays.asList(orderOne, orderTwo, orderThree));
+
+        Category categoryOne = new Category(null, "Electronics");
+        Category categoryTwo = new Category(null, "Books");
+        Category categoryThree = new Category(null, "Computers");
+
+        categoryRepository.saveAll(Arrays.asList(categoryOne, categoryTwo, categoryThree));
     }
 }
