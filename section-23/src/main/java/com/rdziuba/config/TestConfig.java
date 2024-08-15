@@ -2,6 +2,7 @@ package com.rdziuba.config;
 
 import com.rdziuba.entities.Order;
 import com.rdziuba.entities.User;
+import com.rdziuba.entities.enums.OrderStatus;
 import com.rdziuba.repositories.OrderRepository;
 import com.rdziuba.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(userOne, userTwo));
 
-        Order orderOne = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), userOne);
-        Order orderTwo = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), userTwo);
-        Order orderThree = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), userOne);
+        Order orderOne = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), userOne, OrderStatus.PAID);
+        Order orderTwo = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), userTwo, OrderStatus.WAITING_PAYMENT);
+        Order orderThree = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), userOne, OrderStatus.WAITING_PAYMENT);
 
         orderRepository.saveAll(Arrays.asList(orderOne, orderTwo, orderThree));
     }
