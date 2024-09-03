@@ -2,10 +2,12 @@ package com.rdziuba.config;
 
 import com.rdziuba.entities.Category;
 import com.rdziuba.entities.Order;
+import com.rdziuba.entities.Product;
 import com.rdziuba.entities.User;
 import com.rdziuba.entities.enums.OrderStatus;
 import com.rdziuba.repositories.CategoryRepository;
 import com.rdziuba.repositories.OrderRepository;
+import com.rdziuba.repositories.ProductRepository;
 import com.rdziuba.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +27,8 @@ public class TestConfig implements CommandLineRunner {
     private OrderRepository orderRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
 
     @Override
@@ -45,5 +49,22 @@ public class TestConfig implements CommandLineRunner {
         Category categoryThree = new Category(null, "Computers");
 
         categoryRepository.saveAll(Arrays.asList(categoryOne, categoryTwo, categoryThree));
+
+        Product productOne = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+        Product productTwo = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+        Product productThree = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+        Product productFour = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+        Product productFive = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
+
+        productRepository.saveAll(Arrays.asList(productOne, productTwo, productThree, productFour, productFive));
+
+        productOne.getCategories().add(categoryTwo);
+        productTwo.getCategories().add(categoryOne);
+        productTwo.getCategories().add(categoryThree);
+        productThree.getCategories().add(categoryThree);
+        productFour.getCategories().add(categoryThree);
+        productFive.getCategories().add(categoryTwo);
+
+        productRepository.saveAll(Arrays.asList(productOne, productTwo, productThree, productFour, productFive));
     }
 }
