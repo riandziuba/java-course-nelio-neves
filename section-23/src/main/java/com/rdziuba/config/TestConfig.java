@@ -2,10 +2,12 @@ package com.rdziuba.config;
 
 import com.rdziuba.entities.Category;
 import com.rdziuba.entities.Order;
+import com.rdziuba.entities.OrderItem;
 import com.rdziuba.entities.Product;
 import com.rdziuba.entities.User;
 import com.rdziuba.entities.enums.OrderStatus;
 import com.rdziuba.repositories.CategoryRepository;
+import com.rdziuba.repositories.OrderItemRepository;
 import com.rdziuba.repositories.OrderRepository;
 import com.rdziuba.repositories.ProductRepository;
 import com.rdziuba.repositories.UserRepository;
@@ -29,6 +31,8 @@ public class TestConfig implements CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
 
     @Override
@@ -66,5 +70,12 @@ public class TestConfig implements CommandLineRunner {
         productFive.getCategories().add(categoryTwo);
 
         productRepository.saveAll(Arrays.asList(productOne, productTwo, productThree, productFour, productFive));
+
+        OrderItem OrderItemOne = new OrderItem(orderOne, productOne, 2, productOne.getPrice());
+        OrderItem OrderItemTwo = new OrderItem(orderOne, productThree, 1, productThree.getPrice());
+        OrderItem OrderItemThree = new OrderItem(orderTwo, productThree, 2, productThree.getPrice());
+        OrderItem OrderItemFour = new OrderItem(orderThree, productFive, 2, productFive.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(OrderItemOne, OrderItemTwo, OrderItemThree, OrderItemFour));
     }
 }
