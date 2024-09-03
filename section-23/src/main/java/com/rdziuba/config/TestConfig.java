@@ -3,6 +3,7 @@ package com.rdziuba.config;
 import com.rdziuba.entities.Category;
 import com.rdziuba.entities.Order;
 import com.rdziuba.entities.OrderItem;
+import com.rdziuba.entities.Payment;
 import com.rdziuba.entities.Product;
 import com.rdziuba.entities.User;
 import com.rdziuba.entities.enums.OrderStatus;
@@ -17,6 +18,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
 import java.util.Arrays;
 
 @Configuration
@@ -77,5 +80,10 @@ public class TestConfig implements CommandLineRunner {
         OrderItem OrderItemFour = new OrderItem(orderThree, productFive, 2, productFive.getPrice());
 
         orderItemRepository.saveAll(Arrays.asList(OrderItemOne, OrderItemTwo, OrderItemThree, OrderItemFour));
+
+        Payment paymentOne = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), orderOne);
+        orderOne.setPayment(paymentOne);
+
+        orderRepository.save(orderOne);
     }
 }
