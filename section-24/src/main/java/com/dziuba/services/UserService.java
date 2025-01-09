@@ -1,6 +1,7 @@
 package com.dziuba.services;
 
 import com.dziuba.domain.User;
+import com.dziuba.dto.UserDTO;
 import com.dziuba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public List<UserDTO> findAll() {
+        List<User> users = this.userRepository.findAll();
+
+        List<UserDTO> usersDTO = users.stream().map(UserDTO::new).toList();
+
+        return usersDTO;
     }
 }

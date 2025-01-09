@@ -1,6 +1,7 @@
 package com.dziuba.resources;
 
 import com.dziuba.domain.User;
+import com.dziuba.dto.UserDTO;
 import com.dziuba.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,8 @@ public class UserResource {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<User>> findAll() {
-        List<User> users = this.userService.findAll();
+    public ResponseEntity<List<UserDTO>> findAll() {
+        List<UserDTO> users = this.userService.findAll();
         return ResponseEntity.ok(users);
     }
 }
