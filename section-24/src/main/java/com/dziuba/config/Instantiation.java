@@ -2,6 +2,7 @@ package com.dziuba.config;
 
 import com.dziuba.domain.Post;
 import com.dziuba.domain.User;
+import com.dziuba.dto.AuthorDTO;
 import com.dziuba.repository.PostRepository;
 import com.dziuba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,16 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post postOne = new Post("Partiu viagem", null, sdf.parse("21/03/2018"), "Vou viajar para São Paulo. Abraços!", maria);
-        Post postTwo = new Post("Bom dia", null, sdf.parse("23/03/2018"), "Acordei feliz hoje!", maria);
-
         this.userRepository.saveAll((Arrays.asList(maria, alex, bob)));
+
+        Post postOne = new Post("Partiu viagem", null, sdf.parse("21/03/2018"), "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
+        Post postTwo = new Post("Bom dia", null, sdf.parse("23/03/2018"), "Acordei feliz hoje!", new AuthorDTO(maria));
+
         this.postRepository.saveAll(Arrays.asList(postOne, postTwo));
+
+        maria.addPost(postOne);
+        maria.addPost(postTwo);
+
+        userRepository.save(maria);
     }
 }
