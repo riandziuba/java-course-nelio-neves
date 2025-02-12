@@ -33,7 +33,7 @@ public class UserResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> find(@RequestBody UserDTO userDto) {
+    public ResponseEntity<Void> insert(@RequestBody UserDTO userDto) {
         User user = this.userService.fromDTO(userDto);
         user = this.userService.insert(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
@@ -45,6 +45,15 @@ public class UserResource {
         this.userService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<Void> update(@RequestBody UserDTO userDto) {
+        User user = this.userService.fromDTO(userDto);
+        user = this.userService.update(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 
