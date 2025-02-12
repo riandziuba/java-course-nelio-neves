@@ -32,4 +32,12 @@ public class UserService {
         Optional<User> user = this.userRepository.findById(id);
         return new UserDTO(user.orElseThrow(() -> new ObjectNotFoundException("Object not found")));
     }
+
+    public User insert(User user) {
+        return this.userRepository.insert(user);
+    }
+
+    public User fromDTO(UserDTO userDTO) {
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
+    }
 }

@@ -4,11 +4,10 @@ import com.dziuba.domain.User;
 import com.dziuba.dto.UserDTO;
 import com.dziuba.services.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -31,6 +30,14 @@ public class UserResource {
     public ResponseEntity<UserDTO> find(@PathVariable String id) {
         UserDTO user = this.userService.findById(id);
         return ResponseEntity.ok(user);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> find(@RequestBody UserDTO userDto) {
+        User user = this.userService.fromDTO(userDto);
+        user = this.userService.insert(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
 
