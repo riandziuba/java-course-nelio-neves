@@ -4,6 +4,7 @@ import com.dziuba.domain.User;
 import com.dziuba.dto.UserDTO;
 import com.dziuba.services.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,4 +26,12 @@ public class UserResource {
         List<UserDTO> users = this.userService.findAll();
         return ResponseEntity.ok(users);
     }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserDTO> find(@PathVariable String id) {
+        UserDTO user = this.userService.findById(id);
+        return ResponseEntity.ok(user);
+    }
+
+
 }
