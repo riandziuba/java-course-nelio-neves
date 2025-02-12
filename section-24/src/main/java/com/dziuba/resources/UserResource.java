@@ -1,5 +1,6 @@
 package com.dziuba.resources;
 
+import com.dziuba.domain.Post;
 import com.dziuba.domain.User;
 import com.dziuba.dto.UserDTO;
 import com.dziuba.services.UserService;
@@ -28,7 +29,7 @@ public class UserResource {
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> find(@PathVariable String id) {
-        UserDTO user = this.userService.findById(id);
+        UserDTO user = new UserDTO(this.userService.findById(id));
         return ResponseEntity.ok(user);
     }
 
@@ -52,6 +53,12 @@ public class UserResource {
         user = this.userService.update(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "{id}/posts", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> getPosts(@PathVariable String id) {
+        User user = this.userService.findById(id);
+        return ResponseEntity.ok(user.getPosts());
     }
 
 

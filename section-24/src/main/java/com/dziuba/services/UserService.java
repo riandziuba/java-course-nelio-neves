@@ -28,9 +28,9 @@ public class UserService {
         return usersDTO;
     }
 
-    public UserDTO findById(String id) {
+    public User findById(String id) {
         Optional<User> user = this.userRepository.findById(id);
-        return new UserDTO(user.orElseThrow(() -> new ObjectNotFoundException("Object not found")));
+        return user.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
     }
 
     public User insert(User user) {
