@@ -9,6 +9,7 @@ import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -38,6 +39,20 @@ public class PostResource {
     public ResponseEntity<List<Post>> findByTitleV2(@RequestParam(value = "text", defaultValue = "") String text) {
         text = URL.decodeParam(text);
         List<Post> posts = this.postService.findByTitleV2(text);
+        return ResponseEntity.ok().body(posts);
+    }
+
+    @RequestMapping(value = "/fullsearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> fullSearch(
+            @RequestParam(value = "text", defaultValue = "") String text,
+            @RequestParam(value = "minDate", defaultValue = "") String minDateText,
+            @RequestParam(value = "maxDate", defaultValue = "") String maxDateText
+
+    ) {
+        text = URL.decodeParam(text);
+        Date minDate = URL.convertDate(minDateText, new Date(0L));
+        Date maxDate = URL.convertDate(maxDateText, new Date());
+        List<Post> posts = this.postService.fullSearch(text, minDate, maxDate);
         return ResponseEntity.ok().body(posts);
     }
 
