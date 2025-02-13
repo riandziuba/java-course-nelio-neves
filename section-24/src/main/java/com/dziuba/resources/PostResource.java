@@ -34,5 +34,12 @@ public class PostResource {
         return ResponseEntity.ok().body(posts);
     }
 
+    @RequestMapping(value = "/titleSearchv2", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByTitleV2(@RequestParam(value = "text", defaultValue = "") String text) {
+        text = URL.decodeParam(text);
+        List<Post> posts = this.postService.findByTitleV2(text);
+        return ResponseEntity.ok().body(posts);
+    }
+
 
 }
